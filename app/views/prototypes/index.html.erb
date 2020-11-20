@@ -4,8 +4,8 @@
     <% if user_signed_in? %>
        <div class="greeting"> 
         <%= "こんにちは" %>
-        <%= link_to "#{current_user.name}さん", user_path(@prototype.ids), class: :greeting__link%>
-       </div> 
+        <%= link_to "#{current_user.name}さん", user_path(@prototype), class: :greeting__link%>
+       </div>
     <%# // ログインしているときは上記を表示する %>
     <% end %>
     <div class="card__wrapper">
