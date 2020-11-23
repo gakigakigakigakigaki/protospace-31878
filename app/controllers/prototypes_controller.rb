@@ -1,10 +1,11 @@
 class PrototypesController < ApplicationController
-  before_action :authenticate_user!
+  before_action :authenticate_user!, only: [:show, :index, :new]
   before_action :move_to_index, except: [:edit]
   
   def index
     @prototype = Prototype.all
-    @prototypes = Prototype.includes(:user).order("created_at DESC")
+    @prototypes = Prototype.includes(:user)
+    
   end
 
   def new
@@ -12,15 +13,12 @@ class PrototypesController < ApplicationController
   end
 
   def create
-    
     @prototype = Prototype.new(prototype_params)
-    
       if @prototype.save
-        
         redirect_to root_path
-       else
-        @prototype = @prototype.includes(:user)
+      else
         render :new
+
         
       end
   end
@@ -64,7 +62,7 @@ end
   end
 
   def prototype_params
-    params.require(:prototype).permit(:title, :catch_copy, :concept, :image, :user).merge(user_id: current_user.id)
+    params.require(:prototype).permit(:title, :catch_copy, :concept, :image).merge(user_id: current_user.id)
   end
 
 

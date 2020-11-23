@@ -1,17 +1,17 @@
 class UsersController < ApplicationController
 
   def show
-    @user = User.find_by(params[:user_id])
+    @user = User.find(params[:id])
     @name = @user.name
-    @prototypes = Prototype.all
-  end
-
-  private
-
-  def user_params
-  params.require(:user).permit(:name, :email, :password, :profile, :occupation, :position ).merge(prototype_id: params[:prototype_id])
+    @prototypes = @user.prototypes
+    
+    
+    
   end
 end
 
+ def user_params
+  params.require(:user).permit(:name, :email, :password, :profile, :occupation, :position ).merge(user_id: current_user.id) 
 
 
+ end
